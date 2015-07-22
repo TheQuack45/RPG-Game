@@ -70,7 +70,7 @@ namespace RpgGame
         public Monster Clone()
         {
             Monster newMonster = (Monster)this.MemberwiseClone();
-            newMonster.name = (String)this.name.Clone();
+            newMonster.name = (string)this.name.Clone();
             newMonster.level = this.level;
             newMonster.health = this.health;
             newMonster.evadeChance = this.evadeChance;

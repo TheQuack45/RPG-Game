@@ -12,10 +12,48 @@ namespace RpgGame
         Random randomNumberGen = new Random();
 
         // Fields declaration
+        private IQueryable<Boss> BossStock;
+        public IQueryable<Boss> bossStock
+        {
+            get { return BossStock; }
+            set { BossStock = value; }
+        }
 
         // Constructors
+        public Mountain()
+        {
+
+        }
+        
+        public Mountain(IQueryable<Boss> bossStock)
+        {
+            this.bossStock = bossStock;
+        }
 
         // Methods definition
+        public Boss chooseBoss(int level)
+        {
+            // Select appropriate boss for level, or select lowest level boss
+            // if no appropriate boss is available
+            IQueryable<Boss> possibleBosses = null;
+            possibleBosses = (from boss in this.bossStock
+                              where boss.level <= level
+                              select boss);
+            if (!possibleBosses.ToList<Boss>().Any<Boss>())
+            {
+                // No bosses are appropriate for player's level; select lowest level boss available
+                IQueryable<Boss> orderedBosses = from boss in this.bossStock
+                                                 orderby boss.level ascending
+                                                 select boss;
+                return orderedBosses.ToList<Boss>()[0].Clone();
+            }
+            else
+            {
+                // Appropriate bosses available; return random boss
+                return possibleBosses.ToList<Boss>()[randomNumberGen.Next(possibleBosses.ToList<Boss>().Count)].Clone();
+            }
+        }
+        
         public bool fight(Player gamePlayer, Boss fightBoss)
         {
             string choice;
@@ -140,6 +178,11 @@ namespace RpgGame
             {
                 return true;
             }
+        }
+
+        public int lootCalc(int level)
+        {
+            return randomNumberGen.Next((level * 2), (level * 10));
         }
     }
 }

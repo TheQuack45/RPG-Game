@@ -35,6 +35,7 @@ namespace RpgGame
         {
             if (randomNumberGen.Next(100) > 5)
             {
+                // Normal fight with monster at appropriate level
                 IQueryable<Monster> possibleMonsters = from monster in this.monsterStock
                                                        where monster.level <= level
                                                        select monster;
@@ -42,6 +43,7 @@ namespace RpgGame
             }
             else
             {
+                // 5% chance of fighting monster above player level
                 return this.monsterStock.ToList<Monster>()[randomNumberGen.Next(monsterStock.ToList<Monster>().Count)].Clone();
             }
         }

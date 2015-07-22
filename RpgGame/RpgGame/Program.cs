@@ -13,7 +13,8 @@ namespace RpgGame
             // Creates player with given name, 20 health, 5 damage, 10 coins, 25% crit chance, 0 armor points, 40% block chance
             Player gamePlayer = new Player(Console.ReadLine(), 20, 5, 10, 25, 0, 40);
             Forest fightForest = new Forest((new List<Monster> { new Monster(10, 75, 1, 1, "Beetle"), new Monster(20, 50, 3, 2, "Bear"), new Monster(15, 20, 5, 2, "mountainLionThing"), new Monster(25, 50, 5, 3, "Wild Beast") }).AsQueryable<Monster>());
-            // TODO: Convert to weapon/potion/armor/etc system
+            Mountain bossMountain = new Mountain((new List<Boss> { new Boss("Gondlaf The Passable", 25, 50, 10, 25, 10), new Boss("Superboss", 25, 40, 15, 50, 25) }.AsQueryable<Boss>()));
+            // TODO: Add more items to shop
             Shop buyShop = new Shop((new List<Item> { new Weapon("basicSword", 7, 20, 2), new Armor("basicChestplate", 25, 3, 5), new Potion("basicPotion", 10, 5, 5) } ).AsQueryable<Item>());
 
             // Greets player and prompts, begins game
@@ -29,7 +30,7 @@ namespace RpgGame
                                   " damage per hit, and a " +
                                   gamePlayer.critChance +
                                   "% crit chance.");
-                Console.WriteLine("What would you like to do? (village, forest, or shop)");
+                Console.WriteLine("What would you like to do? (village, forest, mountain, or shop)");
 
                 string choice = Console.ReadLine();
                 if (choice.Equals("village"))
@@ -76,7 +77,7 @@ namespace RpgGame
                             gamePlayer.deadLevel();
                         }
                     }
-                    else if (answer.Equals("n"))
+                    else
                     {
                         // Player is not ready to fight. Return to choice menu
                         Console.WriteLine("Returning to choice menu.");
@@ -91,7 +92,8 @@ namespace RpgGame
                     foreach (Item cItem in buyShop.availableItems)
                     {
                         // List each available item in shop
-                        if (cItem is Weapon) {
+                        if (cItem is Weapon)
+                        {
                             Weapon cItemWeapon = null;
                             try
                             {
@@ -185,6 +187,47 @@ namespace RpgGame
                                 Console.WriteLine("You do not have enough coins! You have " + gamePlayer.coins + " coins.");
                             }
 
+                        }
+                    }
+                }
+                else if (choice == "mountain")
+                {
+                    Console.WriteLine("You have gone to the mountain. Are you sure you want to fight a boss?");
+                    Console.WriteLine("Bosses are very difficult and you should not attempt to fight one if you are lower than level 10.");
+                    Console.WriteLine("(y/n)");
+                    string confirmChoice = Console.ReadLine();
+
+                    if (confirmChoice == "y")
+                    {
+                        // Player is sure that they want to fight a boss
+                        Boss fightBoss = bossMountain.chooseBoss(gamePlayer.level);
+                        if (bossMountain.fight(gamePlayer, fightBoss))
+                        {
+                            // Player "won" battle, either through boss defeat or evasion
+                            if (fightBoss.isEvaded)
+                            {
+                                // Player evaded boss; do not give gold or level
+                                Console.WriteLine("You successfully evaded the boss!");
+                            }
+                            else
+                            {
+                                // Player defeated boss; give gold and level
+                                Console.WriteLine("You successfully defeated the monster!");
+                                int lootGold = bossMountain.lootCalc(fightBoss.level);
+                                Console.WriteLine("You looted " + lootGold + " from the boss.");
+                                gamePlayer.coins += lootGold;
+                                gamePlayer.level += (fightBoss.level / 2);
+                            }
+                        }
+                        else
+                        {
+                            // Player defeated. 
+                            Console.WriteLine("You were defeated. Luckily, a kindly villager found you, " +
+                            "brought you back to the village and healed you, but not before looters found you. " +
+                            "You have lost all your belongings.");
+                            gamePlayer.clearInv();
+                            gamePlayer.fillHealth();
+                            gamePlayer.deadLevel();
                         }
                     }
                 }

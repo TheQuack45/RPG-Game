@@ -69,19 +69,37 @@ namespace RpgGame
 
         }
 
-        public Boss(string name, int damage, int health, int level, int superCritChance)
+        public Boss(string name, int damage, int health, int level, int superCritChance, int superCritIncrement)
         {
             this.name = name;
             this.damage = damage;
             this.health = health;
             this.level = level;
             this.superCritChance = superCritChance;
+            this.superCritIncrement = superCritIncrement;
+            this.isEvaded = false;
         }
 
         // Methods definition
         public void resetSuperCrit()
         {
             this.SuperCritAmt = 0;
+        }
+
+        public Boss Clone()
+        {
+            Boss newBoss = (Boss)this.MemberwiseClone();
+            newBoss.name = (string)this.name.Clone();
+            newBoss.damage = this.damage;
+            newBoss.health = this.health;
+            newBoss.level = this.level;
+            newBoss.superCritChance = this.superCritChance;
+            newBoss.superCritIncrement = this.superCritIncrement;
+            newBoss.SuperCritAmt = this.superCritAmt;
+            newBoss.isEvaded = this.isEvaded;
+            newBoss.evadeChance = this.evadeChance;
+
+            return newBoss;
         }
     }
 }
