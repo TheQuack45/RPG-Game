@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Armor.cs" />
+    <Compile Include="Boss.cs" />
     <Compile Include="Forest.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="Monster.cs" />
