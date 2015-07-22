@@ -59,6 +59,8 @@ namespace RpgGame
             string choice;
             bool isSuperCrit = false;
 
+            Console.WriteLine("You are fighting " + fightBoss.name + "!");
+
             while (gamePlayer.health > 0 && fightBoss.health > 0)
             {
                 // Check if supercrit occurred
@@ -140,6 +142,7 @@ namespace RpgGame
                 }
                 else if (choice == "run")
                 {
+                    // TODO: Fix evade code
                     // Player chose to run
                     // Calc evade chance
                     if (randomNumberGen.Next(100) <= fightBoss.evadeChance)

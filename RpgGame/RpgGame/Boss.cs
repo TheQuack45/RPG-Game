@@ -69,7 +69,7 @@ namespace RpgGame
 
         }
 
-        public Boss(string name, int damage, int health, int level, int superCritChance, int superCritIncrement)
+        public Boss(string name, int damage, int health, int level, int superCritChance, int superCritIncrement, int evadeChance)
         {
             this.name = name;
             this.damage = damage;
@@ -77,6 +77,7 @@ namespace RpgGame
             this.level = level;
             this.superCritChance = superCritChance;
             this.superCritIncrement = superCritIncrement;
+            this.evadeChance = evadeChance;
             this.isEvaded = false;
         }
 
