@@ -22,6 +22,8 @@ namespace RpgGame
             Console.WriteLine("Hello " + gamePlayer.name + "!");
             while (true)
             {
+                // TODO: Add option to leave game from option menu ("exit" command?)
+                // TODO: Allow selection of command by just first letter
                 Console.WriteLine("You have " +
                                   gamePlayer.health +
                                   " health, " +
@@ -34,13 +36,13 @@ namespace RpgGame
                 Console.WriteLine("What would you like to do? (village, forest, mountain, or shop)");
 
                 string choice = Console.ReadLine();
-                if (choice.Equals("village"))
+                if (choice == "village" || choice == "m")
                 {
                     // Player heals at village
                     Console.WriteLine("You have slept at the village. You are healed.");
                     gamePlayer.fillHealth();
                 }
-                else if (choice.Equals("forest"))
+                else if (choice == "forest" || choice == "f")
                 {
                     // Player goes to forest to fight monsters
                     Console.WriteLine("You have gone to the forest. Are you ready to fight? (y/n)");
@@ -84,7 +86,7 @@ namespace RpgGame
                         Console.WriteLine("Returning to choice menu.");
                     }
                 }
-                else if (choice.Equals("shop"))
+                else if (choice == "shop" || choice == "s")
                 {
                     // Player goes to shop to buy items
                     Console.WriteLine("You are at the shop. You have " + gamePlayer.coins + " coins.");
@@ -191,7 +193,7 @@ namespace RpgGame
                         }
                     }
                 }
-                else if (choice == "mountain")
+                else if (choice == "mountain" || choice == "m")
                 {
                     Console.WriteLine("You have gone to the mountain. Are you sure you want to fight a boss?");
                     Console.WriteLine("Bosses are very difficult and you should not attempt to fight one if you are lower than level 10.");
@@ -230,6 +232,14 @@ namespace RpgGame
                             gamePlayer.fillHealth();
                             gamePlayer.deadLevel();
                         }
+                    }
+                }
+                else if (choice == "exit" || choice == "e")
+                {
+                    Console.WriteLine("Are you sure you want to leave? (y/n)");
+                    if (Console.ReadLine() == "y")
+                    {
+                        Environment.Exit(0);
                     }
                 }
                 else
