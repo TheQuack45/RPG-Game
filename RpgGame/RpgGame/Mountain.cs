@@ -41,6 +41,13 @@ namespace RpgGame
                 if (choice == "attack")
                 {
                     // Check if supercrit occurred
+                    if (isSuperCrit)
+                    {
+                        // Supercrit occurred; do 10 times damage
+                        Console.WriteLine("The boss has hit you with a super crit!");
+                        gamePlayer.health -= (fightBoss.damage * 10);
+                    }
+
                     // Player chose to attack monster
                     // Calc crit chance
                     if (randomNumberGen.Next(100) <= gamePlayer.critChance)
@@ -63,9 +70,20 @@ namespace RpgGame
                     // Calc block chance
                     if (randomNumberGen.Next(100) > gamePlayer.blockChance)
                     {
-                        // Player successfully blocked; negate enemy damage
-                        Console.WriteLine("You blocked successfully and took no damage, as well as dealing some to the monster!");
-                        fightBoss.health -= (gamePlayer.damage / 2);
+                        // Player successfully blocked; decrease/negate enemy damage
+                        if (isSuperCrit)
+                        {
+                            // Super crit occurred. Take a quarter of super crit damage
+                            Console.WriteLine("The monster hit you with a super crit, but you blocked part of the damage!");
+                            Console.WriteLine("You took " + (fightBoss.damage / 4) + " damage.");
+                            gamePlayer.health -= (fightBoss.damage / 4);
+                        }
+                        else
+                        {
+                            // Super crit did not occur. Negate all damage
+                            Console.WriteLine("You blocked successfully and took no damage, as well as dealing some to the monster!");
+                            fightBoss.health -= (gamePlayer.damage / 2);
+                        }
                     }
                     else
                     {
@@ -80,7 +98,7 @@ namespace RpgGame
                     // List potions in inventory
 
                     // TODO: Add potion usage
-
+                    
                 }
                 else if (choice == "run")
                 {
@@ -95,10 +113,21 @@ namespace RpgGame
                     }
                     else
                     {
-                        // Player did not evade successfully. Take small damage and continue fight
-                        int evadeDamage = (fightBoss.damage / 3);
-                        Console.WriteLine("You were unable to escape the boss! You took " + evadeDamage + " damage.");
-                        gamePlayer.health -= evadeDamage;
+                        // Player did not evade successfully. Check if supercrit occurred
+                        if (isSuperCrit)
+                        {
+                            // Super crit occurred. Take 10x evade damage (10 * normalDamage / 3)
+                            Console.WriteLine("You were unable to escape the boss, and the boss hit you with a super crit!");
+                            Console.WriteLine("You took " + (fightBoss.damage * 4) + " damage!");
+                            gamePlayer.health -= (fightBoss.damage * 4);
+                        }
+                        else
+                        {
+                            // Super crit did not occur. Take evade damage (normalDamage / 3)
+                            int evadeDamage = (fightBoss.damage / 3);
+                            Console.WriteLine("You were unable to escape the boss! You took " + evadeDamage + " damage.");
+                            gamePlayer.health -= evadeDamage;
+                        }
                     }
                 }
             }
