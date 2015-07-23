@@ -161,8 +161,31 @@ namespace RpgGame
                     // Player chose to use potion
                     // List potions in inventory
 
-                    // TODO: Add potion usage
-                    
+                    var potionList = from potion in gamePlayer.inventory.AsQueryable<Item>()
+                                                    where potion is Potion
+                                                    select (Potion)potion;
+
+                    int i = 0;
+                    foreach (Potion cPotion in potionList)
+                    {
+                        Console.WriteLine((i + 1) + ". {0} heals {1} points. You have {2}.", cPotion.name, cPotion.healPoints, 
+                            (from potion in potionList where (potion.name == cPotion.name) select potion).ToList().Count
+                            );
+                        i++;
+                    }
+
+                    // Select potion, heal player, remove potion from inventory
+                    Console.WriteLine("Write the index of the potion you want to use: ");
+                    int chosenIndex = 1;
+                    try {
+                        chosenIndex = (Int32.Parse(Console.ReadLine()) - 1);
+                    } catch (FormatException e)
+                    {
+                        Console.WriteLine("I don't understand that command.");
+                        continue;
+                    }
+                    gamePlayer.addHealth(potionList.ToList<Potion>()[chosenIndex].healPoints);
+                    gamePlayer.inventory.Remove(gamePlayer.inventory.First(x => x.name == potionList.ToList<Potion>()[chosenIndex].name));
                 }
                 else if (choice == "run")
                 {

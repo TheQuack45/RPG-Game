@@ -105,8 +105,16 @@ namespace RpgGame
         }
 
         public int addHealth(int addedHealth) {
-            this.health += addedHealth;
-            return this.health;
+            if ((this.health += addedHealth) >= this.healthCapacity)
+            {
+                this.health = this.healthCapacity;
+                return this.health;
+            }
+            else
+            {
+                this.health += addedHealth;
+                return this.health;
+            }
         }
 
         public void clearInv()
