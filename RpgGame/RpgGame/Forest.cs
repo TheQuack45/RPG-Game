@@ -65,13 +65,37 @@ namespace RpgGame
                     {
                         // Player critted; do two times damage
                         Console.WriteLine("Critical hit on the monster!");
-                        gamePlayer.health -= fightMonster.damage;
+                        if (gamePlayer.armorPoints > 0)
+                        {
+                            // Player has at least one armor points
+                            // Calculates damage with armor based off this equation:
+                            // damage = (opponent damage - (opponent damage / (100 / player armor)))
+                            gamePlayer.health -= fightMonster.damage - (fightMonster.damage / (100 / gamePlayer.armorPoints));
+                        }
+                        else
+                        {
+                            // Player has no armor points
+                            // Calculates damage without armor
+                            gamePlayer.health -= fightMonster.damage;
+                        }
                         fightMonster.health -= (gamePlayer.damage * 2);
                     }
                     else
                     {
                         // Player did not crit; do standard damage
-                        gamePlayer.health -= fightMonster.damage;
+                        if (gamePlayer.armorPoints > 0)
+                        {
+                            // Player has at least one armor points
+                            // Calculates damage with armor based off this equation:
+                            // damage = (opponent damage - (opponent damage / (100 / player armor)))
+                            gamePlayer.health -= fightMonster.damage - (fightMonster.damage / (100 / gamePlayer.armorPoints));
+                        }
+                        else
+                        {
+                            // Player has no armor points
+                            // Calculates damage without armor
+                            gamePlayer.health -= fightMonster.damage;
+                        }
                         fightMonster.health -= gamePlayer.damage;
                     }
                 }

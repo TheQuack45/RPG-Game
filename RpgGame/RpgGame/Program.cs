@@ -15,24 +15,23 @@ namespace RpgGame
             Forest fightForest = new Forest((new List<Monster> { new Monster(10, 75, 1, 1, "Beetle"), new Monster(20, 50, 3, 2, "Bear"), new Monster(15, 20, 5, 2, "mountainLionThing"), new Monster(25, 50, 5, 3, "Wild Beast") }).AsQueryable<Monster>());
             Mountain bossMountain = new Mountain((new List<Boss> { new Boss("Gondlaf The Passable", 25, 50, 10, 25, 10, 40), new Boss("Superboss", 25, 40, 15, 50, 25, 25) }.AsQueryable<Boss>()));
             // TODO: Add more items to shop
-            // TODO: Factor in armor points to damage taken in fights
-            Shop buyShop = new Shop((new List<Item> { new Weapon("basicSword", 7, 20, 2), new Armor("basicChestplate", 25, 3, 5), new Potion("basicPotion", 10, 5, 5) } ).AsQueryable<Item>());
+            Shop buyShop = new Shop((new List<Item> { new Weapon("basicSword", 7, 20, 2), new Armor("basicChestplate", 25, 3, 25), new Potion("basicPotion", 10, 5, 5) } ).AsQueryable<Item>());
 
             // Greets player and prompts, begins game
             Console.WriteLine("Hello " + gamePlayer.name + "!");
             while (true)
             {
-                // TODO: Add option to leave game from option menu ("exit" command?)
-                // TODO: Allow selection of command by just first letter
                 Console.WriteLine("You have " +
                                   gamePlayer.health +
                                   " health, " +
                                   gamePlayer.coins +
                                   " coins, " +
                                   gamePlayer.damage +
-                                  " damage per hit, and a " +
+                                  " damage per hit, a " +
                                   gamePlayer.critChance +
-                                  "% crit chance.");
+                                  "% crit chance, and " +
+                                  gamePlayer.armorPoints +
+                                  " armor points.");
                 Console.WriteLine("What would you like to do? (village, forest, mountain, or shop)");
 
                 string choice = Console.ReadLine();
