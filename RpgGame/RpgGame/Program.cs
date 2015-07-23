@@ -31,10 +31,23 @@ namespace RpgGame
             {
                 gamePlayer = new Player(playerName, 20, 5, 10, 25, 0, 40);
             }
-            Forest fightForest = new Forest((new List<Monster> { new Monster(10, 75, 1, 1, "Beetle"), new Monster(20, 50, 3, 2, "Bear"), new Monster(15, 20, 5, 2, "mountainLionThing"), new Monster(25, 50, 5, 3, "Wild Beast") }).AsQueryable<Monster>());
+            Forest fightForest = new Forest((new List<Monster> { new Monster(10, 75, 1, 1, "Beetle"),
+                                                                 new Monster(20, 50, 3, 2, "Bear"),
+                                                                 new Monster(15, 20, 5, 2, "mountainLionThing"),
+                                                                 new Monster(25, 50, 5, 3, "Wild Beast"),
+                                                                 new Monster(35, 35, 10, 15, "advancedBeetle")
+                                                                 }).AsQueryable<Monster>());
             Mountain bossMountain = new Mountain((new List<Boss> { new Boss("Gondlaf The Passable", 25, 50, 10, 25, 10, 40), new Boss("Superboss", 25, 40, 15, 50, 25, 25) }.AsQueryable<Boss>()));
             // TODO: Add more items to shop
-            Shop buyShop = new Shop((new List<Item> { new Weapon("basicSword", 7, 20, 2), new Armor("basicChestplate", 25, 3, 25), new Potion("basicPotion", 10, 5, 5) } ).AsQueryable<Item>());
+            Shop buyShop = new Shop((new List<Item> { new Weapon("basicSword", 7, 20, 2),
+                                                      new Armor("basicChestplate", 25, 3, 25),
+                                                      new Potion("basicPotion", 10, 5, 5),
+                                                      new Weapon("advancedSword", 11, 35, 1),
+                                                      new Armor("advancedChestplate", 40, 2, 50),
+                                                      new Potion("advancedPotion", 20, 1, 15),
+                                                      new Weapon("superSword", 20, 55, 3),
+                                                      new Armor("superChestplate", 60, 1, 75)
+                                                      } ).AsQueryable<Item>());
 
             // Greets player and prompts, begins game
             Console.WriteLine("Hello " + gamePlayer.name + "!");
@@ -48,13 +61,15 @@ namespace RpgGame
                                   gamePlayer.damage +
                                   " damage per hit, a " +
                                   gamePlayer.critChance +
-                                  "% crit chance, and " +
+                                  "% crit chance, " +
                                   gamePlayer.armorPoints +
-                                  " armor points.");
+                                  " armor points, and are level " +
+                                  gamePlayer.level +
+                                  ".");
                 Console.WriteLine("What would you like to do? (village, forest, mountain, or shop)");
 
                 string choice = Console.ReadLine();
-                if (choice == "village" || choice == "m")
+                if (choice == "village" || choice == "v")
                 {
                     // Player heals at village
                     Console.WriteLine("You have slept at the village. You are healed.");
@@ -270,6 +285,8 @@ namespace RpgGame
                     // Unrecognized command
                     Console.WriteLine("I don't recognize that command.");
                 }
+
+                Console.Write("\r\n");
             }
         }
     }
