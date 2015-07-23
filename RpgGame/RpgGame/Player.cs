@@ -99,6 +99,21 @@ namespace RpgGame
             this.inventory = new List<Item>();
         }
 
+        public Player(string name, int health, int healthCapacity, int damage, int coins, int critChance, int armorPoints, int blockChance, int level)
+        {
+            this.name = name;
+            this.healthCapacity = healthCapacity;
+            this.health = health;
+            this.health = healthCapacity;
+            this.damage = damage;
+            this.coins = coins;
+            this.critChance = critChance;
+            this.armorPoints = armorPoints;
+            this.blockChance = blockChance;
+            this.level = level;
+            this.inventory = new List<Item>();
+        }
+
         // Methods definition
         public void fillHealth() {
             addHealth(this.healthCapacity - this.health);
