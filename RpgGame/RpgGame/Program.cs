@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using RpgGame;
 
 namespace RpgGame
 {
@@ -11,7 +12,7 @@ namespace RpgGame
             Console.WriteLine("Welcome to this game");
             Console.WriteLine("What is your name?");
             // Creates player with given name, 20 health, 5 damage, 10 coins, 25% crit chance, 0 armor points, 40% block chance
-            Player gamePlayer = new Player(Console.ReadLine(), 20, 5, 50, 25, 0, 40);
+            Player gamePlayer = new Player(Console.ReadLine(), 20, 5, 10, 25, 0, 40);
             Forest fightForest = new Forest((new List<Monster> { new Monster(10, 75, 1, 1, "Beetle"), new Monster(20, 50, 3, 2, "Bear"), new Monster(15, 20, 5, 2, "mountainLionThing"), new Monster(25, 50, 5, 3, "Wild Beast") }).AsQueryable<Monster>());
             Mountain bossMountain = new Mountain((new List<Boss> { new Boss("Gondlaf The Passable", 25, 50, 10, 25, 10, 40), new Boss("Superboss", 25, 40, 15, 50, 25, 25) }.AsQueryable<Boss>()));
             // TODO: Add more items to shop
@@ -240,6 +241,11 @@ namespace RpgGame
                     {
                         Environment.Exit(0);
                     }
+                }
+                else if (choice == "save")
+                {
+                    Console.WriteLine("Saving to " + gamePlayer.name + ".txt");
+                    SaveAndLoad.save(gamePlayer);
                 }
                 else
                 {
