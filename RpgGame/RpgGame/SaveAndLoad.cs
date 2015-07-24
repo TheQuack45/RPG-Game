@@ -16,7 +16,13 @@ namespace RpgGame
             // Saves current player information into text file
             //string acctName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
             string acctName = Environment.UserName;
-            TextWriter saveWriter = new StreamWriter("C:\\Users\\" + acctName + "\\Desktop\\" + gamePlayer.name + "-Save.txt");
+            TextWriter saveWriter = null;
+            try {
+                saveWriter = new StreamWriter("C:\\Users\\" + acctName + "\\Desktop\\" + gamePlayer.name + "-Save.txt");
+            } catch (FileNotFoundException e)
+            {
+                Console.WriteLine("Save write failed.");
+            }
             saveWriter.WriteLine("health:" + gamePlayer.health);
             saveWriter.WriteLine("healthcap:" + gamePlayer.health);
             saveWriter.WriteLine("damage:" + gamePlayer.damage);
@@ -31,7 +37,14 @@ namespace RpgGame
         public static Player load(string name)
         {
             string acctName = Environment.UserName;
-            TextReader saveReader = new StreamReader("C:\\Users\\" + acctName + "\\Desktop\\" + name + "-Save.txt");
+            TextReader saveReader = null;
+            try {
+                saveReader = new StreamReader("C:\\Users\\" + acctName + "\\Desktop\\" + name + "-Save.txt");
+            } catch (FileNotFoundException e)
+            {
+                Console.WriteLine("Save file load failed.");
+                return null;
+            }
             string[] firstRegexArr = Regex.Split(Regex.Match(saveReader.ReadToEnd(), "health:[\\d]{1,}").ToString(), "health:");
             int health = Int32.Parse(firstRegexArr[1]);
             // TODO: Fix file loading; line below throws IndexOutOfBoundsException
