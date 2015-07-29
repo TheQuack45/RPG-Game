@@ -277,7 +277,7 @@ namespace RpgGame
                 }
                 else if (choice == "save")
                 {
-                    Console.WriteLine("Saving to " + gamePlayer.name + ".txt");
+                    Console.WriteLine("Saving to " + gamePlayer.name + "-Save.txt");
                     SaveAndLoad.save(gamePlayer);
                 }
                 else

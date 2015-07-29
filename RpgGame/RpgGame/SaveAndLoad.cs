@@ -14,7 +14,6 @@ namespace RpgGame
         public static void save(Player gamePlayer)
         {
             // Saves current player information into text file
-            //string acctName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
             string acctName = Environment.UserName;
             TextWriter saveWriter = null;
             try {
@@ -45,18 +44,18 @@ namespace RpgGame
                 Console.WriteLine("Save file load failed.");
                 return null;
             }
-            string[] firstRegexArr = Regex.Split(Regex.Match(saveReader.ReadToEnd(), "health:[\\d]{1,}").ToString(), "health:");
-            int health = Int32.Parse(firstRegexArr[1]);
-            // TODO: Fix file loading; line below throws IndexOutOfBoundsException
-            int healthCap = Int32.Parse(Regex.Split(Regex.Match(saveReader.ToString(), "healthcap:[\\d]{1,}").ToString(), "healthcap:")[1]);
-            int damage = Int32.Parse(Regex.Split(Regex.Match(saveReader.ToString(), "damage:[\\d]{1,}").ToString(), "damage:")[1]);
-            int coins = Int32.Parse(Regex.Split(Regex.Match(saveReader.ToString(), "coins:[\\d]{1,}").ToString(), "coins:")[1]);
-            int crit = Int32.Parse(Regex.Split(Regex.Match(saveReader.ToString(), "crit:[\\d]{1,}").ToString(), "crit:")[1]);
-            int armor = Int32.Parse(Regex.Split(Regex.Match(saveReader.ToString(), "armor:[\\d]{1,}").ToString(), "armor:")[1]);
-            int block = Int32.Parse(Regex.Split(Regex.Match(saveReader.ToString(), "block:[\\d]{1,}").ToString(), "block:")[1]);
-            int level = Int32.Parse(Regex.Split(Regex.Match(saveReader.ToString(), "level:[\\d]{1,}").ToString(), "level:")[1]);
 
-            return new Player("name", health, healthCap, damage, coins, crit, armor, block, level);
+            string fullFile = saveReader.ReadToEnd();
+            int health = Int32.Parse(Regex.Split(Regex.Match(fullFile, "health:[\\d]{1,}").ToString(), "health:")[1]);
+            int healthCap = Int32.Parse(Regex.Split(Regex.Match(fullFile, "healthcap\\:[\\d]{1,}").ToString(), "healthcap:")[1]);
+            int damage = Int32.Parse(Regex.Split(Regex.Match(fullFile, "damage:[\\d]{1,}").ToString(), "damage:")[1]);
+            int coins = Int32.Parse(Regex.Split(Regex.Match(fullFile, "coins:[\\d]{1,}").ToString(), "coins:")[1]);
+            int crit = Int32.Parse(Regex.Split(Regex.Match(fullFile, "crit:[\\d]{1,}").ToString(), "crit:")[1]);
+            int armor = Int32.Parse(Regex.Split(Regex.Match(fullFile, "armor:[\\d]{1,}").ToString(), "armor:")[1]);
+            int block = Int32.Parse(Regex.Split(Regex.Match(fullFile, "block:[\\d]{1,}").ToString(), "block:")[1]);
+            int level = Int32.Parse(Regex.Split(Regex.Match(fullFile, "level:[\\d]{1,}").ToString(), "level:")[1]);
+
+            return new Player(name, health, healthCap, damage, coins, crit, armor, block, level);
         }
     }
 }
