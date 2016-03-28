@@ -120,7 +120,7 @@ namespace RpgGame
         }
 
         public int addHealth(int addedHealth) {
-            if ((this.health += addedHealth) >= this.healthCapacity)
+            if ((this.health + addedHealth) >= this.healthCapacity)
             {
                 this.health = this.healthCapacity;
                 return this.health;

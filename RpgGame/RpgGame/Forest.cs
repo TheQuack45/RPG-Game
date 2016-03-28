@@ -129,8 +129,7 @@ namespace RpgGame
                     foreach (Potion cPotion in potionList)
                     {
                         Console.WriteLine((i + 1) + ". {0} heals {1} points. You have {2}.", cPotion.name, cPotion.healPoints,
-                            (from potion in potionList where (potion.name == cPotion.name) select potion).ToList().Count
-                            );
+                            (from potion in potionList where (potion.name == cPotion.name) select potion).ToList().Count);
                         i++;
                     }
 
